@@ -1,7 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const http = require('http');
+const socketIo = require('socket.io');
 
 const app = express();
+const server = http.createServer(app);
+const io = socketIo(server);
 const port = 3000; // You can use any port you like
 
 // Use body-parser middleware to parse JSON data from incoming requests
@@ -22,6 +26,13 @@ app.post('/webhook', (req, res) => {
 app.get('/',(req, res) => {
   res.send('halo wardana')
 })
+
+// server config
+
+// initial socket io
+io.on("connection", (socket) => {
+  console.log("new client connected");
+});
 
 // Start the server
 app.listen(port, () => {
